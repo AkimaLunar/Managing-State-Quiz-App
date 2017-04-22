@@ -1,0 +1,23 @@
+$color-blue: #4286f4;
+$color-red: #f45942;
+$color-green: #16b756;
+
+$ui-scheme: (
+  primary: $color-blue,
+  danger: $color-red,
+  success: $color-green
+);
+
+$color-xs-light-grey: #f7f8f9;
+$color-light-grey: #e6ecf2;
+$color-medium-grey: #69717a;
+$color-dark-light-grey: #2f363d;
+$color-xs-dark-light-grey: #1c252d;
+
+$grey-scheme: (
+  xs-light-grey: $color-xs-light-grey,
+  light-grey: $color-light-grey,
+  medium-grey: $color-medium-grey,
+  dark-light-grey: $color-dark-light-grey,
+  xs-dark-light-grey: $color-xs-dark-light-grey,
+);

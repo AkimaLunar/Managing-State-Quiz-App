@@ -1,0 +1,96 @@
+@import 'variables';
+@import 'skeleton';
+
+
+// Mixins
+.font {
+   @each $theme, $color in $grey-scheme {
+     &--#{$theme} {
+       color: $color;
+     }
+   }
+}
+
+// Custom Styles
+
+header,
+main {
+  border: 1px solid $color-light-grey;
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.header {
+  margin-top: 3rem;
+  &--title {
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 0;
+  }
+}
+
+main {
+  margin-top: 1rem;
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}
+
+.question {
+  font-size: 3rem;
+  &--subtitle {
+    font-weight: 700;
+  }
+}
+
+.option {
+    display: block;
+    margin: .5rem 0;
+
+    button {
+      width: 100%;
+    }
+
+    &--correct button[disabled],
+    &--correct button[disabled]:hover,
+    &--correct button[disabled]:focus {
+      background: transparentize($color-green, 0.85);
+      border: 1px solid $color-green;
+      color: $color-green;
+    }
+
+    &--wrong button[disabled],
+    &--wrong button[disabled]:hover,
+    &--wrong button[disabled]:focus {
+      background: transparentize($color-red, .85);
+      border: 1px solid $color-red;
+      color: $color-red;
+      cursor: default;
+    }
+}
+
+button[disabled] {
+  cursor: default;
+  color: $color-medium-grey;
+  border-color:$color-medium-grey;
+  opacity: 0.5;
+}
+
+button[disabled]:hover,
+button[disabled]:focus {
+  color: $color-medium-grey;
+  border-color:$color-medium-grey;
+}
+
+.controls{
+  &__helper {
+    color: $color-medium-grey;
+    font-style: italic;
+    text-align: right;
+    line-height: 1.25;
+  }
+}
+
+
