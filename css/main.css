@@ -588,4 +588,12 @@ button[disabled]:focus {
   text-align: right;
   line-height: 1.25; }
 
+.clearfix:after {
+  content: " ";
+  /* Older browser do not support empty content */
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both; }
+
 /*# sourceMappingURL=main.css.map */

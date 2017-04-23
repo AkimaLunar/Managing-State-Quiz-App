@@ -6,9 +6,9 @@ var titleElement = '#js-title';
 var optionsElement ='.js-options';
 var controlsElement = '.js-controls';
 
-var startButton = '.js-onStart';
-var resetButton = '.js-onReset';
-var nextButton = '.js-onNext';
+var startButton = '.js-onStart button';
+var resetButton = '.js-onReset button';
+var nextButton = '.js-onNext button';
 var optionButton = '.option';
 
 // Templates
@@ -156,7 +156,9 @@ renderQuiz(state, questionsProgressElement, titleElement, optionsElement, contro
 // Event Listeners
 // --------------------------------------------------------------------
 
+// Controls
 $(controlsElement).on('click', $(startButton), function(event){
+  event.stopImmediatePropagation();
   console.log('clicked Start');
   start(state);
   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
@@ -164,11 +166,20 @@ $(controlsElement).on('click', $(startButton), function(event){
 })
 
 $(controlsElement).on('click', $(nextButton), function(event){
+  event.stopImmediatePropagation();
   console.log('clicked Next');
   next(state);
   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
 })
 
+$(controlsElement).on('click', $(resetButton), function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Reset');
+  reset(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+})
+
+// Check
 $(optionsElement).on('click', $(optionButton), function(event){
   var currentChoice = parseInt($(event.target).closest('li').attr('data-option-index'));
   var currentCheck = check(currentChoice, state, QUESTIONS);
@@ -176,7 +187,27 @@ $(optionsElement).on('click', $(optionButton), function(event){
   renderResult(state, currentCheck, optionsElement, controlsElement);
 })
 
-$(controlsElement).on('click', $(resetButton), function(event){
+// Temporary controls
+var tempStartButton = '.js-temp-onStart';
+var tempNextButton = '.js-temp-onNext';
+var tempResetButton = '.js-temp-onReset';
+$(tempStartButton).click(function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Start');
+  start(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+  console.log(state);
+})
+
+$(tempNextButton).click(function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Next');
+  next(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+})
+
+$(tempResetButton).click(function(event){
+  event.stopImmediatePropagation();
   console.log('clicked Reset');
   reset(state);
   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
