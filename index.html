@@ -12,17 +12,27 @@
 </head>
 <body>
 <div class="container">
-  <header class="header">
+  <header class="header six columns offset-by-three">
     <h1 class="header--title font--medium-grey">Sci-Fi Trivia</h1>
   </header>
   <main class="six columns offset-by-three">
-    <p class="question--subtitle font--medium-grey">&nbsp;</p>
-    <h2 class="question">Ready to test your knowledge of Sci-Fi?</h2>
+    <p class="question--subtitle font--medium-grey" id="js-questions-progress">&nbsp;</p>
+    <h2 class="question" id="js-title"></h2>
+    <ul id="js-options"></ul>
 
   </main>
-  <footer class="controls">
-    <button type="button" class="button-primary six columns offset-by-three" onclick="window.location.href='./step1.html'">Start</button>
+  <footer class="controls" id="js-controls">
+
   </footer>
 </div>
+
+<!-- SCRIPTS -->
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script src="questions.js"></script>
+<script src="app.js"></script>
+
 </body>
 </html>

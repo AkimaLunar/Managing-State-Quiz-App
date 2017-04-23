@@ -1,0 +1,167 @@
+// Elements and Templates
+// --------------------------------------------------------------------
+
+// NEEDS REFACTORING
+var questionsProgressElement = $('#js-questions-progress');
+var titleElement = $('#js-title');
+var optionsElement = $('#js-options');
+// NEEDS REFACTORING
+
+var controlsElement = '#js-controls';
+var optionTemplate = '<li class="option"><button></button></li>';
+var startButtonTemplate = '<button type="button" class="button-primary six columns offset-by-three" id="js-onStart" ">Start</button>'
+var nextButtonTemplate =  (
+  '<p class="three columns offset-by-three controls__helper">' +
+    'Pick an answer to move to the next question.' +
+  '</p>' +
+  '<button type="button" class="three columns" disabled id="js-onNext">Next</button>'
+);
+var resetButtonTemplate = '<button type="button" class="button-danger six columns offset-by-three" id="js-onReset">Start Over</button>';
+var startButton = '#js-onStart';
+var resetButton = '#js-onReset';
+var nextButton = '#js-onNext';
+var choiceButtons = '#js-options';
+var optionButton = '.option';
+
+// State Management
+// --------------------------------------------------------------------
+var state = {
+  total: QUESTIONS.length,
+  first: true,
+  final: false,
+  counter: 0,
+  correct: 0
+}
+
+function start(state) {
+  state.first = false;
+}
+function next(state) {
+  state.counter++;
+  if (state.counter >= state.total) {
+    state.final = true;
+  };
+}
+
+function check(input, state, questions) {
+  if (input === questions[state.counter].correct) {
+    state.correct++;
+  }
+  return {
+    input: input,
+    correct: questions[state.counter].correct
+  }
+}
+
+function reset(state) {
+  state.first = true;
+  state.final = false;
+  state.counter = 0;
+  state.correct = 0;
+}
+
+
+// Renderers
+// --------------------------------------------------------------------
+function renderTotal(state, element){
+  console.log('Rendering total');
+  if (state.final || state.first) { element.html('&nbsp;') }
+  else { element.html('Question ' + (state.counter+1) + ' out of ' + state.total) }
+
+};
+function renderFirst(state, element, controls){
+  console.log('Rendering first slide');
+  element.html('Ready to test your knowledge of Sci-Fi?')
+  $(controlsElement).html(startButtonTemplate);
+};
+
+function renderOption(option, index){
+  console.log('Rendering an option');
+  var optionHtml = $(optionTemplate);
+  optionHtml.attr('data-option-index', index);
+  optionHtml.find('button').text(option);
+  return optionHtml;
+}
+
+function renderQuestion(state, question, options, controls, questions) {
+  console.log('Rendering a question');
+  var currentQuestion = questions[state.counter];
+  question.html(currentQuestion.question);
+  var optionsHtml = currentQuestion.options.map(function(option, index){
+      return renderOption(option, index);
+  })
+  options.html(optionsHtml);
+  $(controlsElement).html(nextButtonTemplate);
+};
+
+function renderAnswer(state, element){
+
+};
+
+function renderFinal(state, element, controls){
+  console.log('Rendering last slide');
+  element.html('You&rsquo;ve got <strong>' + state.correct + '</strong> right out of ' + state.total +'.');
+  $(controlsElement).html(resetButtonTemplate);
+};
+
+function emptyOptions(element){
+  element.empty();
+}
+
+function renderQuiz(
+    state,
+    progressElement,
+    titleElement,
+    optionsElement,
+    controlsElement,
+    questions
+  ) {
+  if (state.first === true) {
+    console.log('state.first === true')
+    renderFirst(state, titleElement, optionsElement, controlsElement);
+    emptyOptions(optionsElement)
+  } 
+  if (state.final === true) {
+    console.log('state.final === true')
+    renderFinal(state, titleElement, optionsElement, controlsElement);
+    emptyOptions(optionsElement)
+  }
+  if (state.first === false && state.final === false) {
+    console.log('state.first === false && state.final === false')
+    renderTotal(state, progressElement);
+    renderQuestion(state, titleElement, optionsElement, controlsElement, QUESTIONS);
+  }
+};
+
+renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+
+
+// Event Listeners
+// --------------------------------------------------------------------
+
+$(controlsElement).on('click', $(startButton), function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Start');
+  start(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+  console.log(state);
+})
+
+$(controlsElement).on('click', $(nextButton), function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Next');
+  next(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+})
+
+// choiceButtons.on('click', $(optionButton), function(event){
+//   console.log('clicked Option');
+//   concole.log(event.target);
+// })
+
+$(controlsElement).on('click', $(resetButton), function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Reset');
+  reset(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+})
