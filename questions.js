@@ -1,10 +1,5 @@
 var QUESTIONS = [
   {
-    question: 'Who is the best?',
-    options: ['Ria', 'Ivy', 'Gillis', 'Jas'],
-    correct: 1
-  },
-  {
     question: 'Set in the year 2517, what space drama TV series follows the adventures of the renegade crew of the spaceship Serenity?',
     options: ['V', 'Andromeda', 'Babylon 5', 'Firefly'],
     correct: 3
