@@ -13,14 +13,14 @@ var optionButton = '.option';
 
 // Templates
 var optionTemplate = '<li class="option"><button></button></li>';
-var startButtonTemplate = '<button type="button" class="button-primary six columns offset-by-three js-onStart" id="" ">Start</button>'
+var startButtonTemplate = '<button type="button" class="button-primary six columns offset-by-three js-onStart" onclick="tempStart()">Start</button>'
 var nextButtonTemplate =  (
   '<p class="three columns offset-by-three controls__helper">' +
     'Pick an answer to move to the next question.' +
   '</p>' +
-  '<button type="button" class="three columns js-onNext" id="">Next</button>'
+  '<button type="button" class="three columns js-onNext" onclick="tempNext()">Next</button>'
 );
-var resetButtonTemplate = '<button type="button" class="button-danger six columns offset-by-three js-onReset" id="">Start Over</button>';
+var resetButtonTemplate = '<button type="button" class="button-danger six columns offset-by-three js-onReset" onclick="tempReset()">Start Over</button>';
 
 
 // State Management
@@ -157,27 +157,27 @@ renderQuiz(state, questionsProgressElement, titleElement, optionsElement, contro
 // --------------------------------------------------------------------
 
 // Controls
-$(controlsElement).on('click', $(startButton), function(event){
-  event.stopImmediatePropagation();
-  console.log('clicked Start');
-  start(state);
-  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-  console.log(state);
-})
+// $(controlsElement).on('click', $(startButton), function(event){
+//   event.stopImmediatePropagation();
+//   console.log('clicked Start');
+//   start(state);
+//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+//   console.log(state);
+// })
 
-$(controlsElement).on('click', $(nextButton), function(event){
-  event.stopImmediatePropagation();
-  console.log('clicked Next');
-  next(state);
-  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-})
+// $(controlsElement).on('click', $(nextButton), function(event){
+//   event.stopImmediatePropagation();
+//   console.log('clicked Next');
+//   next(state);
+//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+// })
 
-$(controlsElement).on('click', $(resetButton), function(event){
-  event.stopImmediatePropagation();
-  console.log('clicked Reset');
-  reset(state);
-  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-})
+// $(controlsElement).on('click', $(resetButton), function(event){
+//   event.stopImmediatePropagation();
+//   console.log('clicked Reset');
+//   reset(state);
+//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+// })
 
 // Check
 $(optionsElement).on('click', $(optionButton), function(event){
@@ -188,27 +188,22 @@ $(optionsElement).on('click', $(optionButton), function(event){
 })
 
 // Temporary controls
-var tempStartButton = '.js-temp-onStart';
-var tempNextButton = '.js-temp-onNext';
-var tempResetButton = '.js-temp-onReset';
-$(tempStartButton).click(function(event){
-  event.stopImmediatePropagation();
-  console.log('clicked Start');
+function tempStart(){
   start(state);
   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
   console.log(state);
-})
+}
 
-$(tempNextButton).click(function(event){
-  event.stopImmediatePropagation();
+function tempNext(){
   console.log('clicked Next');
   next(state);
   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-})
+  console.log(state);
+}
 
-$(tempResetButton).click(function(event){
-  event.stopImmediatePropagation();
+function tempReset(){
   console.log('clicked Reset');
   reset(state);
-  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-})
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS)
+  console.log(state);;
+}
