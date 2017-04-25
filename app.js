@@ -6,21 +6,21 @@ var titleElement = '#js-title';
 var optionsElement ='.js-options';
 var controlsElement = '.js-controls';
 
-var startButton = '.js-onStart button';
-var resetButton = '.js-onReset button';
-var nextButton = '.js-onNext button';
+var startButton = '#js-onStart';
+var resetButton = '#js-onReset';
+var nextButton = '#js-onNext';
 var optionButton = '.option';
 
 // Templates
 var optionTemplate = '<li class="option"><button></button></li>';
-var startButtonTemplate = '<button type="button" class="button-primary six columns offset-by-three js-onStart" onclick="tempStart()">Start</button>'
+var startButtonTemplate = '<button type="button" class="button-primary six columns offset-by-three" id="js-onStart">Start</button>'
 var nextButtonTemplate =  (
   '<p class="three columns offset-by-three controls__helper">' +
     'Pick an answer to move to the next question.' +
   '</p>' +
-  '<button type="button" class="three columns js-onNext" onclick="tempNext()">Next</button>'
+  '<button type="button" class="three columns" id="js-onNext">Next</button>'
 );
-var resetButtonTemplate = '<button type="button" class="button-danger six columns offset-by-three js-onReset" onclick="tempReset()">Start Over</button>';
+var resetButtonTemplate = '<button type="button" class="button-danger six columns offset-by-three" id="js-onReset">Start Over</button>';
 
 
 // State Management
@@ -32,7 +32,9 @@ var state = {
   counter: 0,
   correct: 0,
   showResult: false,
-  answers: []
+  answers: [],
+  // Better implementation:
+  // questions: QUESTIONS.slice(0)
 }
 
 function start(state) {
@@ -157,30 +159,30 @@ renderQuiz(state, questionsProgressElement, titleElement, optionsElement, contro
 // --------------------------------------------------------------------
 
 // Controls
-// $(controlsElement).on('click', $(startButton), function(event){
-//   event.stopImmediatePropagation();
-//   console.log('clicked Start');
-//   start(state);
-//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-//   console.log(state);
-// })
+$(controlsElement).on('click', startButton, function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Start');
+  start(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+  console.log(state);
+})
 
-// $(controlsElement).on('click', $(nextButton), function(event){
-//   event.stopImmediatePropagation();
-//   console.log('clicked Next');
-//   next(state);
-//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-// })
+$(controlsElement).on('click', nextButton, function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Next');
+  next(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+})
 
-// $(controlsElement).on('click', $(resetButton), function(event){
-//   event.stopImmediatePropagation();
-//   console.log('clicked Reset');
-//   reset(state);
-//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-// })
+$(controlsElement).on('click', resetButton, function(event){
+  event.stopImmediatePropagation();
+  console.log('clicked Reset');
+  reset(state);
+  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+})
 
 // Check
-$(optionsElement).on('click', $(optionButton), function(event){
+$(optionsElement).on('click', optionButton, function(event){
   var currentChoice = parseInt($(event.target).closest('li').attr('data-option-index'));
   var currentCheck = check(currentChoice, state, QUESTIONS);
   console.log(currentCheck.input === currentCheck.correct );
@@ -188,22 +190,22 @@ $(optionsElement).on('click', $(optionButton), function(event){
 })
 
 // Temporary controls
-function tempStart(){
-  start(state);
-  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-  console.log(state);
-}
+// function tempStart(){
+//   start(state);
+//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+//   console.log(state);
+// }
 
-function tempNext(){
-  console.log('clicked Next');
-  next(state);
-  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
-  console.log(state);
-}
+// function tempNext(){
+//   console.log('clicked Next');
+//   next(state);
+//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS);
+//   console.log(state);
+// }
 
-function tempReset(){
-  console.log('clicked Reset');
-  reset(state);
-  renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS)
-  console.log(state);;
-}
+// function tempReset(){
+//   console.log('clicked Reset');
+//   reset(state);
+//   renderQuiz(state, questionsProgressElement, titleElement, optionsElement, controlsElement, QUESTIONS)
+//   console.log(state);;
+// }
